@@ -3,31 +3,14 @@ package com.bridgelabz;
 import java.util.Scanner;
 
 /*
-Program that implements UC4 by validating the inputs using if-else conditional statements
+Program that implements UC5 by refactoring validation of inputs and calculation of Hazard score into a Separate Method
  */
 
 public class FactoryRobotHazardAnalyzer {
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        // UC1: Display Static Hazard Message
-        System.out.println("Factory Robot Hazard Analyzer");
-
-        // UC2: Accept Robot Hazard Inputs
-        // armPrecision input
-        System.out.println("Enter arm precision (0.0 - 1.0): ");
-        double armPrecision = scanner.nextDouble();
-        scanner.nextLine();
-
-        // workerDensity input
-        System.out.println("Enter Worker Density (1 - 20): ");
-        int workerDensity = scanner.nextInt();
-        scanner.nextLine();
-
-        // machineryState input
-        System.out.println("Enter Machinery State (Worn/Faulty/Critical): ");
-        String machineryState = scanner.nextLine();
+    // UC5: Refactor Validation into a Separate Method
+    public static double calculateHazardRisk(double armPrecision, int workerDensity, String machineryState) {
+        double hazardRiskScore = -1;
 
         // UC4: Introduce Validation Using Conditional Logic
         if (armPrecision < 0 || armPrecision > 1) {
@@ -56,9 +39,35 @@ public class FactoryRobotHazardAnalyzer {
             }
 
             // hazardRiskScore formula
-            double hazardRiskScore = ((1.0 - armPrecision) * 15.0) + (workerDensity * machineRiskFactor);
-            System.out.println("Hazard Risk Score: " + hazardRiskScore);
+            hazardRiskScore = ((1.0 - armPrecision) * 15.0) + (workerDensity * machineRiskFactor);
         }
+
+        return hazardRiskScore;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // UC1: Display Static Hazard Message
+        System.out.println("Factory Robot Hazard Analyzer");
+
+        // UC2: Accept Robot Hazard Inputs
+        // armPrecision input
+        System.out.println("Enter arm precision (0.0 - 1.0): ");
+        double armPrecision = scanner.nextDouble();
+        scanner.nextLine();
+
+        // workerDensity input
+        System.out.println("Enter Worker Density (1 - 20): ");
+        int workerDensity = scanner.nextInt();
+        scanner.nextLine();
+
+        // machineryState input
+        System.out.println("Enter Machinery State (Worn/Faulty/Critical): ");
+        String machineryState = scanner.nextLine();
+
+        double hazardRiskScore = calculateHazardRisk(armPrecision, workerDensity, machineryState);
+        if (hazardRiskScore != -1) { System.out.println("Hazard Risk Score: " + hazardRiskScore); }
 
         scanner.close();
     }
