@@ -12,5 +12,7 @@ invalid scenarios using a custom exception. Functionalities:
 ## Use Case 1: Display Static Hazard Message
 Displays a static message indicating the purpose of the system.
 
+## Use Case 2: Accept Robot Hazard Inputs
+Accepts inputs required for hazard analysis from the user.
 
 
