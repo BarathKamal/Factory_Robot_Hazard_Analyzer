@@ -6,23 +6,32 @@ import java.util.Scanner;
 Program that implements UC5 by refactoring validation of inputs and calculation of Hazard score into a Separate Method
  */
 
+// UC6: Introduce custom exception - RobotSafetyException
+class RobotSafetyException extends Exception {
+    public RobotSafetyException(String message) {
+        super(message);
+        System.out.println("Exception: " + message);
+    }
+}
+
 public class FactoryRobotHazardAnalyzer {
 
     // UC5: Refactor Validation into a Separate Method
-    public static double calculateHazardRisk(double armPrecision, int workerDensity, String machineryState) {
+    // Method can throw exceptions
+    public static double calculateHazardRisk(double armPrecision, int workerDensity, String machineryState) throws RobotSafetyException {
         double hazardRiskScore = -1;
 
         // UC4: Introduce Validation Using Conditional Logic
         if (armPrecision < 0 || armPrecision > 1) {
-            System.out.println("Invalid Arm Precision Value");
+            throw new RobotSafetyException("Invalid Arm Precision Value");
         }
         else if (workerDensity < 0 ||workerDensity > 20) {
-            System.out.println("Invalid Worker Density Value");
+            throw new RobotSafetyException("Invalid Worker Density Value");
         }
         else if (!(machineryState.equals("Worn") ||
                 machineryState.equals("Faulty") ||
                 machineryState.equals("Critical"))) {
-            System.out.println("Invalid Machinery State");
+            throw new RobotSafetyException("Invalid Machinery State");
         }
         else {
 
@@ -66,8 +75,11 @@ public class FactoryRobotHazardAnalyzer {
         System.out.println("Enter Machinery State (Worn/Faulty/Critical): ");
         String machineryState = scanner.nextLine();
 
-        double hazardRiskScore = calculateHazardRisk(armPrecision, workerDensity, machineryState);
-        if (hazardRiskScore != -1) { System.out.println("Hazard Risk Score: " + hazardRiskScore); }
+        //
+        try {
+            double hazardRiskScore = calculateHazardRisk(armPrecision, workerDensity, machineryState);
+            System.out.println("Hazard Risk Score: " + hazardRiskScore);
+        } catch (RobotSafetyException e) {}
 
         scanner.close();
     }
