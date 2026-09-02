@@ -3,9 +3,26 @@ package com.bridgelabz;
 import java.util.Scanner;
 
 /*
-Program that implements UC6 by creating a custom Exception called RobotSafetyException, handling the invalid cases of input
-through try-catch, throw and throws
+Program that implements UC7 by mapping machineryState with respective machineRiskFactor using enumertion
  */
+
+// UC7: Machinery state risk mapping
+// Using Enumeration
+enum MachineryState {
+    Worn(1.3),
+    Faulty(2.0),
+    Critical(3.0);
+
+    private final double machineRiskFactor;
+
+    MachineryState(double machineRiskFactor) {
+        this.machineRiskFactor = machineRiskFactor;
+    }
+
+    public double getMachineRiskFactor() {
+        return machineRiskFactor;
+    }
+}
 
 // UC6: Introduce custom exception - RobotSafetyException
 class RobotSafetyException extends Exception {
@@ -38,16 +55,9 @@ public class FactoryRobotHazardAnalyzer {
         else {
 
             // UC3: Calculate Hazard Risk Score (No Validation)
-            double machineRiskFactor = 0.0;
-
-            // Assigning machineryRiskFactor to respective machineryState
-            if (machineryState.equals("Worn")) {
-                machineRiskFactor = 1.3;
-            } else if (machineryState.equals("Faulty")) {
-                machineRiskFactor = 2.0;
-            } else if (machineryState.equals("Critical")) {
-                machineRiskFactor = 3.0;
-            }
+            // Updated (UC7) to use enumeration for machinery state risk mapping
+            MachineryState state = MachineryState.valueOf(machineryState);
+            double machineRiskFactor = state.getMachineRiskFactor();
 
             // hazardRiskScore formula
             hazardRiskScore = ((1.0 - armPrecision) * 15.0) + (workerDensity * machineRiskFactor);
