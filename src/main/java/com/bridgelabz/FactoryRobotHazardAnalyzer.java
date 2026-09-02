@@ -3,7 +3,8 @@ package com.bridgelabz;
 import java.util.Scanner;
 
 /*
-Program that implements UC5 by refactoring validation of inputs and calculation of Hazard score into a Separate Method
+Program that implements UC6 by creating a custom Exception called RobotSafetyException, handling the invalid cases of input
+through try-catch, throw and throws
  */
 
 // UC6: Introduce custom exception - RobotSafetyException
@@ -22,6 +23,7 @@ public class FactoryRobotHazardAnalyzer {
         double hazardRiskScore = -1;
 
         // UC4: Introduce Validation Using Conditional Logic
+        // Updated the validation to use exception handling
         if (armPrecision < 0 || armPrecision > 1) {
             throw new RobotSafetyException("Invalid Arm Precision Value");
         }
@@ -75,7 +77,7 @@ public class FactoryRobotHazardAnalyzer {
         System.out.println("Enter Machinery State (Worn/Faulty/Critical): ");
         String machineryState = scanner.nextLine();
 
-        //
+        // try-catch block handling the custom exceptions
         try {
             double hazardRiskScore = calculateHazardRisk(armPrecision, workerDensity, machineryState);
             System.out.println("Hazard Risk Score: " + hazardRiskScore);
